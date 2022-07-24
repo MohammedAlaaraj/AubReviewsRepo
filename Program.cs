@@ -1,4 +1,18 @@
+using AubReviews.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+//DI for dbcontext
+var connectionString = builder.Configuration.GetConnectionString("WebApiDatabase");
+builder.Services.AddDbContext<AubReviewsContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
